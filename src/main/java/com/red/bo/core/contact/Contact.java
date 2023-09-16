@@ -3,7 +3,6 @@ package com.red.bo.core.contact;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.red.bo.core.skills.Skill;
 import com.red.bo.core.user.User;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -49,7 +48,7 @@ public class Contact {
     @Pattern(regexp = "\\d{10}")
     private String phoneNumber;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "contact_skill",
             joinColumns = @JoinColumn(name = "contact_id"),
