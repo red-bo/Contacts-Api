@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.red</groupId>
 	<artifactId>bo</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<name>Contacts Api</name>
 	<description>View of contacts resources</description>
 	<properties>
