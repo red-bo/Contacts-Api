@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,7 +56,7 @@ public class ContactController {
     @ApiResponse(responseCode = "200", description = "Contact found")
     @ApiResponse(responseCode = "400", description = "Contact not found")
     @GetMapping("/{id}")
-    public ResponseEntity<ContactDTO> getContactById(@PathVariable Long id) {
+    public ResponseEntity<ContactDTO> getContactById(@NotNull @PathVariable Long id) {
         ContactDTO contact = map.toContactDTO(contactService.getContactById(id));
         if (contact != null) {
             return new ResponseEntity<>(contact, HttpStatus.OK);
@@ -66,7 +67,7 @@ public class ContactController {
 
     @Operation(description = "Update a contact by ID")
     @PutMapping("/{id}")
-    public ResponseEntity<ContactDTO> updateContact(@PathVariable Long id, @Valid @RequestBody Contact updatedContact) {
+    public ResponseEntity<ContactDTO> updateContact(@NotNull @PathVariable Long id, @Valid @RequestBody Contact updatedContact) {
         ContactDTO contact = map.toContactDTO(contactService.updateContact(id, updatedContact));
         if (contact != null) {
             return new ResponseEntity<>(contact, HttpStatus.OK);
@@ -77,7 +78,7 @@ public class ContactController {
 
     @Operation(description = "Delete a contact by ID")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteContact(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteContact(@NotNull @PathVariable Long id) {
         boolean deleted = contactService.deleteContact(id);
         if (deleted) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

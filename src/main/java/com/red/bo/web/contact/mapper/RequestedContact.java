@@ -1,5 +1,6 @@
 package com.red.bo.web.contact.mapper;
 
+import com.red.bo.web.contacts.validation.ValidContact;
 import com.red.bo.web.skill.mapper.RequestedSkill;
 import com.red.bo.web.user.mapper.RequestedUser;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Data
 @Builder
+@ValidContact
 public class RequestedContact {
     private Long id;
 

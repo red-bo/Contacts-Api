@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -52,7 +53,7 @@ public class SkillController {
 
     @Operation(description = "Get skill by ID")
     @GetMapping("/{id}")
-    public ResponseEntity<SkillDTO> getSkillById(@PathVariable Long id) {
+    public ResponseEntity<SkillDTO> getSkillById(@NotNull @PathVariable Long id) {
         var skil = skillService.getSkillById(id);
         SkillDTO skill = skillMapper.toSkillDTO(skil);
         if (skill != null) {
@@ -64,7 +65,7 @@ public class SkillController {
 
     @Operation(description = "Update a skill by ID")
     @PutMapping("/{id}")
-    public ResponseEntity<SkillDTO> updateSkill(@PathVariable Long id,
+    public ResponseEntity<SkillDTO> updateSkill(@NotNull @PathVariable Long id,
                                                       @Valid @RequestBody RequestedSkill updatedSkill) {
         var skill = skillMapper
                 .toSkillDTO(skillService.updateSkill(id, skillMapper.toSkill(updatedSkill)));
@@ -77,7 +78,7 @@ public class SkillController {
 
     @Operation(description = "Delete a skill by ID")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteSkill(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteSkill(@NotNull @PathVariable Long id) {
         boolean deleted = skillService.deleteSkill(id);
         if (deleted) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

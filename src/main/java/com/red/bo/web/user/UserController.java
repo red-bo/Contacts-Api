@@ -1,6 +1,7 @@
 package com.red.bo.web.user;
 
 import com.red.bo.core.user.UserService;
+import com.red.bo.web.user.mapper.RequestedUser;
 import com.red.bo.web.user.mapper.UserDTO;
 import com.red.bo.web.user.mapper.UserMapper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,7 +44,7 @@ public class UserController {
         return ResponseEntity.ok().header(HttpHeaders.AUTHORIZATION, "Bearer " + jwt).build();
     } */
 
-    @GetMapping("user/current")
+    @GetMapping("users/current")
     @Operation(description = "Get current user data")
     public ResponseEntity<UserDTO> getCurrentUser() {
         var user = userService.getAllUsers().get(0);
@@ -57,6 +60,12 @@ public class UserController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @PostMapping("users")
+    public ResponseEntity<UserDTO> createUser(@RequestBody RequestedUser user) {
+        var createdUser = map.toUserDTO(userService.createUser(map.toUser(user)));
+        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 }
 

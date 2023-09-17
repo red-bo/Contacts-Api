@@ -23,4 +23,11 @@ public class UserService {
         }
         return false;
     }
+
+    public User createUser(User user) {
+        if (user != null) {
+            return userRepository.save(user);
+        }
+        throw new RuntimeException("user cannot be create");
+    }
 }

@@ -51,7 +51,7 @@ public class SkillService {
 
     public List<Skill> getSkillsByLevel(String level) {
         if(!level.isBlank()){
-            return skillRepository.getSkillsByLevel(level);
+            return skillRepository.getSkillsByLevel(level.toUpperCase());
         }
         return null;
     }
