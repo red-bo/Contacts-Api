@@ -1,8 +1,8 @@
 package com.red.bo.core.contact;
 
-import com.red.bo.core.exception.ContactNotFoundException;
-import com.red.bo.core.exception.DeleteContactException;
-import com.red.bo.core.exception.UpdateContactException;
+import com.red.bo.exception.ContactNotFoundException;
+import com.red.bo.exception.DeleteContactException;
+import com.red.bo.exception.UpdateContactException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

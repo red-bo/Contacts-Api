@@ -1,84 +1,71 @@
-package com.red.bo.configuration;/*package com.red.bo.configuration;
+package com.red.bo.configuration;
 
+import com.red.bo.security.JwtAuthenticationFilter;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
+
+import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
+import static org.springframework.web.cors.CorsConfiguration.ALL;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
+@AllArgsConstructor
 public class WebSecurityConfig {
+
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final AuthenticationProvider authenticationProvider;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers(
-                                path("/"),
-                                path("swagger-ui.html"),
-                                path("/swagger-ui/**"),
-                                path("/v3/api-docs/**"),
-                                path("/swagger-resources/**"),
-                                path("/webjars/**"),
-                                path("h2-console**"))
-                        .permitAll()
-                        .anyRequest().permitAll()
-                )
-                .csrf(csrf -> csrf.disable());
+        http.csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(request ->
+                        request
+                                .requestMatchers(
+                                        "/",
+                                        "/api/v1/auth/**",
+                                        "/v2/api-docs",
+                                        "/v3/api-docs",
+                                        "/v3/api-docs/**",
+                                        "/swagger-resources",
+                                        "/swagger-resources/**",
+                                        "/configuration/ui",
+                                        "/configuration/security",
+                                        "/swagger-ui/**",
+                                        "/webjars/**",
+                                        "/swagger-ui.html"
 
+                                ).permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
+                                .anyRequest().authenticated())
+                .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
+                .authenticationProvider(authenticationProvider).addFilterBefore(
+                        jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()));
         return http.build();
     }
-    private AntPathRequestMatcher path(String pattern){
-        return new AntPathRequestMatcher(pattern);
+
+    private CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList(ALL));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList(ALL));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }
-
- */
-
-
-
-
-/*
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return new UserService(userRepository);
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public AuthenticationManager authenticationManager() throws Exception {
-        return new AuthenticationManagerBuilder(objectPostProcessor)
-                .authenticationProvider(new AuthenticationProvider() {
-
-                    @Override
-                    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-                        String username = authentication.getName();
-                        String password = authentication.getCredentials().toString();
-
-                        User user = userRepository.findByUsername(username);
-                        if (user == null) {
-                            throw new UsernameNotFoundException("User not found with username: " + username);
-                        }
-
-                        if (!passwordEncoder().matches(password, user.getPassword())) {
-                            throw new BadCredentialsException("Wrong password");
-                        }
-
-                        return new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(),
-                                user.getAuthorities());
-                    }
-
-                    @Override
-                    public boolean supports(Class<?> authentication) {
-                        return authentication.equals(UsernamePasswordAuthenticationToken.class);
-                    }
-                })
-                .build();
-    }
-}*/

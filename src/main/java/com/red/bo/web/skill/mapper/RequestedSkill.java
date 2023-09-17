@@ -24,5 +24,8 @@ public class RequestedSkill {
 
     @Schema(description = "Contact list which has the skill")
     private List<RequestedContact> contacts;
+
+    @Schema(description = "User id to whom the skill belongs")
+    private Long userId;
 }
 

@@ -8,9 +8,7 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class RequestedUser {
-    @Schema(description = "ID of the user")
-    private Long id;
+public class RegisteredUser {
 
     @Schema(description = "Username", example = "john")
     private String username;
@@ -19,4 +17,3 @@ public class RequestedUser {
     private String password;
 
 }
-

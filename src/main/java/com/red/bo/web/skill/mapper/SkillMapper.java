@@ -2,6 +2,7 @@ package com.red.bo.web.skill.mapper;
 
 import com.red.bo.core.contact.Contact;
 import com.red.bo.core.skills.Skill;
+import com.red.bo.core.user.User;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,6 +17,8 @@ public class SkillMapper {
     }
 
     public Skill toSkill(RequestedSkill requestedSkill){
+        var user = new User();
+        user.setId(requestedSkill.getUserId());
         var skill = new Skill();
         skill.setId(requestedSkill.getId());
         skill.setName(requestedSkill.getName());
@@ -27,6 +30,7 @@ public class SkillMapper {
                     contact.setId(requestedSkill.getId());
                     return contact;})
                 .toList());
+        skill.setUser(user);
         return skill;
     }
 }

@@ -1,6 +1,7 @@
 package com.red.bo.web.user.mapper;
 
 import com.red.bo.core.user.User;
+import com.red.bo.security.Role;
 import com.red.bo.web.contact.mapper.ContactMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -22,15 +23,11 @@ public class UserMapper {
                 .build();
     }
 
-    public User toUser(RequestedUser requestedUser){
+    public User requestedRegisterUsertoUser(RequestedRegisterUser requestedRegisterUser){
         var user = new User();
-        user.setId(requestedUser.getId());
-        user.setUsername(requestedUser.getUsername());
-        user.setContacts(requestedUser.getContacts()
-                                        .stream()
-                                        .map(map::toContact)
-                                        .toList());
-
+        user.setUsername(requestedRegisterUser.getUsername());
+        user.setPassword(requestedRegisterUser.getPassword());
+        user.setRole(Role.USER);
         return user;
     }
 }

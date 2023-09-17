@@ -1,4 +1,4 @@
-package com.red.bo.core.exception.generic;
+package com.red.bo.exception.generic;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

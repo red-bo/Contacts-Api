@@ -1,10 +1,10 @@
 package com.red.bo.web;
 
-import com.red.bo.core.exception.ContactNotFoundException;
-import com.red.bo.core.exception.DeleteContactException;
-import com.red.bo.core.exception.UpdateContactException;
-import com.red.bo.core.exception.generic.ApiError;
-import com.red.bo.core.exception.generic.CustomHandlerException;
+import com.red.bo.exception.ContactNotFoundException;
+import com.red.bo.exception.DeleteContactException;
+import com.red.bo.exception.UpdateContactException;
+import com.red.bo.exception.generic.ApiError;
+import com.red.bo.exception.generic.CustomHandlerException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

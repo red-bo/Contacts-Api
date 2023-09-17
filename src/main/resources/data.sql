@@ -1,0 +1,1 @@
+insert into users values ('red', '$2y$10$Spl3AhSXEVWA9.aK9yzjr.M6RrTgnrO3Fp3MNlRmY1ftuEs0WpZ6O', 'ADMIN');

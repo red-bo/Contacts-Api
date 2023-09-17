@@ -1,4 +1,4 @@
-package com.red.bo.core.exception;
+package com.red.bo.exception;
 
 public class UpdateContactException extends RuntimeException {
     public UpdateContactException(String message) {

@@ -1,4 +1,4 @@
-package com.red.bo.authentication;/*package com.red.bo.authentication;
+package com.red.bo.security;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,4 +15,3 @@ public enum Permission implements GrantedAuthority {
         return getAuthority();
     }
 }
-*/

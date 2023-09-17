@@ -1,8 +1,8 @@
-package com.red.bo.core.exception.generic;
+package com.red.bo.exception.generic;
 
-import com.red.bo.core.exception.ContactNotFoundException;
-import com.red.bo.core.exception.DeleteContactException;
-import com.red.bo.core.exception.UpdateContactException;
+import com.red.bo.exception.ContactNotFoundException;
+import com.red.bo.exception.DeleteContactException;
+import com.red.bo.exception.UpdateContactException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
