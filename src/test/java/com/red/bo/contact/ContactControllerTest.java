@@ -56,7 +56,6 @@ public class ContactControllerTest {
 
     @Test
     public void testGetAllContacts() {
-        // Créez une liste de contacts simulée
         List<Contact> contacts = new ArrayList<>();
         contacts.add(new Contact());
         contacts.add(new Contact());
@@ -79,16 +78,10 @@ public class ContactControllerTest {
         when(contactService.getContactById(2L)).thenReturn(null);
         when(contactMapper.toContactDTO(contact)).thenReturn(ContactDTO.builder().build());
 
-        // Appelez la méthode à tester avec un ID valide
         ResponseEntity<ContactDTO> responseEntity1 = contactController.getContactById(1L);
-
-        // Effectuez des assertions sur la réponse
         assertEquals(HttpStatus.OK, responseEntity1.getStatusCode());
 
-        // Appelez la méthode à tester avec un ID invalide
         ResponseEntity<ContactDTO> responseEntity2 = contactController.getContactById(2L);
-
-        // Effectuez des assertions sur la réponse
         assertEquals(HttpStatus.NOT_FOUND, responseEntity2.getStatusCode());
     }
 
@@ -116,11 +109,9 @@ public class ContactControllerTest {
         when(contactService.deleteContact(2L)).thenReturn(false);
 
         ResponseEntity<Void> responseEntity1 = contactController.deleteContact(1L);
-
         assertEquals(HttpStatus.NO_CONTENT, responseEntity1.getStatusCode());
 
         ResponseEntity<Void> responseEntity2 = contactController.deleteContact(2L);
-
         assertEquals(HttpStatus.NOT_FOUND, responseEntity2.getStatusCode());
     }
 }
